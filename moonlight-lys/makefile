@@ -4,7 +4,7 @@ PDF = $(patsubst %.ly,%.pdf,$(LY))
 pdf: $(PDF)
 
 %.pdf: %.ly
-	lilypond $< -f PDF
+	lilypond $<
 
 clean:
 	rm -rf $(PDF)
