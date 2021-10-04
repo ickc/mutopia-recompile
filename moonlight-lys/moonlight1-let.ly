@@ -1,4 +1,4 @@
-\version "2.10.16"
+\version "2.22.0"
 
 #(ly:set-option 'point-and-click #f)
 #(set-default-paper-size "letter" )
@@ -24,7 +24,7 @@
 	maintainerWeb = "www.stewartholmes.com"
 	lastupdated = "2007/Feb/11"
 
-	copyright = \markup { \teeny \center-align { "Copyright © 2007" "Licensed under the Creative Commons Attribution-ShareAlike 2.5 License" "http://creativecommons.org/licenses/by-sa/2.5." } }
+	copyright = \markup { \teeny \center-column { "Copyright © 2007" "Licensed under the Creative Commons Attribution-ShareAlike 2.5 License" "http://creativecommons.org/licenses/by-sa/2.5." } }
 	footer = "Mutopia-2007/02/11-276"
 	tagline = ""
 }
@@ -38,25 +38,25 @@ up =
 	\change Staff = "up"
 }
 
-moveFingering = #(define-music-function (parser location shift) (pair?)
+moveFingering = #(define-music-function (shift) (pair?)
 #{
-	\once \override Fingering #'extra-offset = $shift
+	\once \override Fingering.extra-offset = $shift
 #})
 
-moveText = #(define-music-function (parser location shift) (pair?)
+moveText = #(define-music-function (shift) (pair?)
 #{
-	\once \override TextScript #'extra-offset = $shift
+	\once \override TextScript.extra-offset = $shift
 #})
 
-movePhrasingSlur = #(define-music-function (parser location shift) (pair?)
+movePhrasingSlur = #(define-music-function (shift) (pair?)
 #{
-	\once \override PhrasingSlur #'extra-offset = $shift
+	\once \override PhrasingSlur.extra-offset = $shift
 #})
 
 fingerscript =
 {
-	\once \override TextScript #'font-size = #-5
-	\once \override TextScript #'font-encoding = #'fetaNumber
+	\once \override TextScript.font-size = #-5
+	\once \override TextScript.font-encoding = #'fetaText
 }
 
 topmain =  \relative c'
@@ -78,15 +78,15 @@ topmain =  \relative c'
 	\fingerscript fis2-"5 - 4" \(\moveFingering #'(0 . 1) g4-5 \moveFingering #'(0 . 0.5) e-4\) |		%13
 	fis2-5 fis |
 	b,4 r r 
-	%\once \override PhrasingSlur #'control-points = #'((0 . 0) (3 . 5) (6 . 5) (10 . 0)) 
+	%\once \override PhrasingSlur.control-points = #'((0 . 0) (3 . 5) (6 . 5) (10 . 0)) 
 	\fingerscript 
 	
 	
-	\override PhrasingSlur #'extra-offset = #'(0 . 2)
-	%\override PhrasingSlur #'after-line-breaking = #pagebreakone
+	\override PhrasingSlur.extra-offset = #'(0 . 2)
+	%\override PhrasingSlur.after-line-breaking = #pagebreakone
 	\moveText #'(0 . 1.2) b'-"5 - 4" \( |  
 	
-	\revert PhrasingSlur #'extra-offset
+	\revert PhrasingSlur.extra-offset
 	
 	c2.-5 ais4-4\) |
 	b2.-5 \fingerscript \moveFingering #'(-0.1 . -0.15) b4-"5 - 4" \( |		%17
@@ -159,18 +159,18 @@ topsecondary =  \relative c'
 	#(override-auto-beam-setting '(end * * * *)  2 4)
 	#(override-auto-beam-setting '(end * * * *)  3 4)
 	
-	\set tupletSpannerDuration = #(ly:make-moment 1 4)
+	\tupletSpan 4
 	
 	\set fingeringOrientations = #'(up)
 	
-	\override TextScript   #'padding = #2
+	\override TextScript.padding = #2
 	
-	\times 2/3
+	\tuplet 3/2
 	{
 		\stemUp gis8-1^\markup {\italic "Si deve suonare tutto questo pezzo delicatissimamente e senza sordini"} cis-3 e-5
 		
-		\override TupletNumber #'transparent = ##t
-		\override TupletBracket #'bracket-visibility = ##f
+		\override TupletNumber.transparent = ##t
+		\override TupletBracket.bracket-visibility = ##f
 		
 		gis, cis e	gis, cis e	gis, cis e |
 		
@@ -244,12 +244,12 @@ topsecondary =  \relative c'
 		cis e, gis	e' e, gis	cis e, gis |
 		\stemUp
 
-		\once \override PhrasingSlur #'control-points = #'( ( 1.17 . 5.8) ( 4.53 . 16.0) ( 21.1 . 19.0) ( 31.9 . 15.3) )
+		\once \override PhrasingSlur.control-points = #'( ( 1.17 . 5.8) ( 4.53 . 16.0) ( 21.1 . 19.0) ( 31.9 . 15.3) )
 		\phrasingSlurUp \moveFingering #'(-1.35 . 3.3) dis-1 \( \moveFingering #'(0 . 3) a'-3 \moveFingering #'(0 . 2) fis-2
 		\up
 		bis-5 a-1 dis-4      bis-1 fis'-3 dis   a' fis bis-5\) |
 		\down
-		\once \override PhrasingSlur #'control-points = #'( ( 1.17 . 6.5) ( 4.53 . 18.0) ( 23.1 . 20.0) ( 29.2 . 12.0) )
+		\once \override PhrasingSlur.control-points = #'( ( 1.17 . 6.5) ( 4.53 . 18.0) ( 23.1 . 20.0) ( 29.2 . 12.0) )
 		\phrasingSlurUp \moveFingering #'(-1.35 . 3.8) e,,-1 \( \moveFingering #'(0 . 4) cis'-4 \moveFingering #'(0 . 3) gis-2
 		\up
 		\stemNeutral
@@ -298,9 +298,9 @@ topsecondary =  \relative c'
 		gis-2 cis-4 e-5			gis, cis e	gis, cis e    | 
 		gis,-2 dis'-4 fis-5	gis, dis' fis		gis, dis' fis		gis, dis' fis | %61
 		gis,-1 \(e'-4 cis-2	gis'-5 e-1 cis'-4	gis-1 e'-4 cis-2	gis'-5 e cis    |
-		bis-1 dis-3 a-1		bis-5 fis-2 a-4		dis,-1 fis-3 \once \override Tie #'extra-offset = #'(0 . -1) a,-1 ~	a gis-3 fis-2     | 
-		<cis'-\tweak #'extra-offset #'(0 . 2)-4 e,-\tweak #'extra-offset #'(0 . 2)_1>\) e-5 cis-1	gis'-3 e-2 \moveFingering #'(0 . 1) cis'-5	gis-1 e'-4 cis-2	gis'-5 e-4 cis-2    |
-		bis-1 dis-3 a-1		bis-5 fis-3 a-4		dis,-2 fis-3 \once \override Tie #'extra-offset = #'(0 . -1) a,-1 ~	a gis-3 fis-2     |  %65
+		bis-1 dis-3 a-1		bis-5 fis-2 a-4		dis,-1 fis-3 \once \override Tie.extra-offset = #'(0 . -1) a,-1 ~	a gis-3 fis-2     | 
+		<cis'-\tweak extra-offset #'(0 . 2)-4 e,-\tweak extra-offset #'(0 . 2)_1>\) e-5 cis-1	gis'-3 e-2 \moveFingering #'(0 . 1) cis'-5	gis-1 e'-4 cis-2	gis'-5 e-4 cis-2    |
+		bis-1 dis-3 a-1		bis-5 fis-3 a-4		dis,-2 fis-3 \once \override Tie.extra-offset = #'(0 . -1) a,-1 ~	a gis-3 fis-2     |  %65
 		\moveText #'(0 . 1) <cis'-4 e,-1>_\markup{\italic "decresc."} gis cis	e cis gis		r e \(gis			cis gis e\)     |
 		r cis \(e			gis e cis\)
 	}
@@ -309,7 +309,7 @@ topsecondary =  \relative c'
 
 bottom = \relative c
 {
-	\override TextScript   #'padding = #2
+	\override TextScript.padding = #2
 	\key e \major
 	\time 2/2
 	\clef bass
@@ -329,7 +329,7 @@ bottom = \relative c
 	<c c,-"5-4">4 <b b,-5> <ais ais,-4>2 |
 	\stemDown
 	<b b,> e,4-3 g-2 |			%13
-	fis2-3 <fis fis,-\tweak #'extra-offset #'(0 . -4)-5> |
+	fis2-3 <fis fis,-\tweak extra-offset #'(0 . -4)-5> |
 	\stemUp
 	<b b,-"3-5">1 ~ |
 	
@@ -349,8 +349,8 @@ bottom = \relative c
 	<fis fis,-4>2 <dis dis,-"5-4">4 <cis cis,-"5-4"> |		%25
 	<bis gis bis,>2. <bis gis bis,>4 |
 	<cis gis cis,-4>2 <fis, fis,>4 <fisis fisis,> |
-	<gis gis,-\tweak #'extra-offset #'(0 . -3)-4>1 |
-	<gis gis,-\tweak #'extra-offset #'(0 . -3)-5> |			%29
+	<gis gis,-\tweak extra-offset #'(0 . -3)-4>1 |
+	<gis gis,-\tweak extra-offset #'(0 . -3)-5> |			%29
 	<gis gis,> |
 	<gis gis,> |
 	<gis gis,> |
@@ -374,7 +374,7 @@ bottom = \relative c
 	<fis, fis,-5> <gis gis,-"4-3"> |
 	<cis cis,>1 ~ |
 	<cis cis,>4 <fis fis,-"3-5"> <a a,-4> <fis fis,-"5-3"> |
-	<cis cis,-\tweak #'extra-offset #'(0 . -2)-5>1 ~ |				%53
+	<cis cis,-\tweak extra-offset #'(0 . -2)-5>1 ~ |				%53
 	<cis cis,>4 <fis fis,> <a a,-4> <fis fis,> |
 	<cis cis,-"5-3">2 <fis, fis,-5> |
 	<dis' dis,-"3-4">2. <e e,-3>4 |
@@ -429,8 +429,8 @@ breaking =
 			\context Staff = "up"
 			<<
 				\set Staff.midiInstrument = #"acoustic grand"
-				\context Voice = VA { \voiceOne \override Fingering #'avoid-slur = #'none \topmain }
-				\context Voice = VB { \voiceTwo \override Fingering #'avoid-slur = #'none \topsecondary }
+				\context Voice = VA { \voiceOne \override Fingering.avoid-slur = #'none \topmain }
+				\context Voice = VB { \voiceTwo \override Fingering.avoid-slur = #'none \topsecondary }
 			>>
 			\context Staff = "down"
 			<<

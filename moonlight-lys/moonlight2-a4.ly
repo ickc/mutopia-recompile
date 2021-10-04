@@ -1,4 +1,4 @@
-\version "2.10.16"
+\version "2.22.0"
 
 \header {
  piece = \markup { \bold "Allegretto" }
@@ -17,29 +17,29 @@ allUp = { \stemUp \slurUp \tieUp }
 allDown = { \stemDown \slurDown \tieDown }
 allNeutral = { \stemNeutral \slurNeutral \tieNeutral }
 
-moveMarkup = #(define-music-function (parser location shift) (pair?)
+moveMarkup = #(define-music-function (shift) (pair?)
 #{
-	\once \override TextScript #'extra-offset = $shift
+	\once \override TextScript.extra-offset = $shift
 #})
 
-moveFingering = #(define-music-function (parser location shift) (pair?)
+moveFingering = #(define-music-function (shift) (pair?)
 #{
-	\once \override Fingering #'extra-offset = $shift
+	\once \override Fingering.extra-offset = $shift
 #})
 
-moveDynamics = #(define-music-function (parser location shift) (pair?)
+moveDynamics = #(define-music-function (shift) (pair?)
 #{
-	\once \override DynamicText #'extra-offset = $shift
+	\once \override DynamicText.extra-offset = $shift
 #})
 
 fingerfont =
 {
-	\once \override TextScript #'font-size = #-5
-	\once \override TextScript #'font-encoding = #'fetaNumber
+	\once \override TextScript.font-size = #-5
+	\once \override TextScript.font-encoding = #'fetaText
 }
 
 top =  \relative c' {
-\override TextScript   #'padding = #2
+\override TextScript.padding = #2
 
  \key des \major
  \time 3/4
@@ -49,7 +49,7 @@ top =  \relative c' {
  \stemNeutral
  \moveMarkup #'(0 . -0.5) <des' as>4^\markup { \override #'(baseline-skip . 1.4) \finger \column { "5" "2" } }-\p-( |
  \moveFingering #'(0 . -1) <c as>2^4 \moveMarkup #'(-0.25 . -4) <bes g>4^\markup { \override #'(baseline-skip . 1.4) \finger \column { "3" "1" } } |		%1
- <es-\tweak #'extra-offset #'(0 . 0.5)-5 as,-\tweak #'extra-offset #'(0.25 . 1)-2>-.-) r <des f,>^5-. |
+ <es-\tweak extra-offset #'(0 . 0.5)-5 as,-\tweak extra-offset #'(0.25 . 1)-2>-.-) r <des f,>^5-. |
  \moveMarkup #'(0 . -1.5)<c as>^\markup { \override #'(baseline-skip . 1.4) \finger \column { "4" "2" } }-. r <bes g>-3-. |
  as-2-. r <ges'! des>^\markup { \override #'(baseline-skip . 1.4) \finger \column { "5" "2" } }-( |
  <f des>2-4 \moveMarkup #'(0 . -4.2) <es c>4^\markup { \override #'(baseline-skip . 1.4) \finger \column { "3" "1" } } |		%5
@@ -97,11 +97,11 @@ top =  \relative c' {
    es2 es4 |
    es2 es4 |
    des2 des4 |
-   \once \override TextScript #'extra-offset = #'(0 . -0.6) ges2-2_\markup {\italic "cresc."} f4-1 |	%21 (2)
+   \once \override TextScript.extra-offset = #'(0 . -0.6) ges2-2_\markup {\italic "cresc."} f4-1 |	%21 (2)
    ges2-2-\sf-\> \moveFingering #'(0.4 . 1) es4-1 ~ |
    es-\p-\! des-2 bes |
   } >>
-  <f'-3 des-\tweak #'extra-offset #'(0 . -0.6)-2>4-( <es-3 c-\tweak #'extra-offset #'(0 . -0.6)-1> ) <des' des,>-( |
+  <f'-3 des-\tweak extra-offset #'(0 . -0.6)-2>4-( <es-3 c-\tweak extra-offset #'(0 . -0.6)-1> ) <des' des,>-( |
   <c c,>2 <bes bes,>4-4 |		%25
   << {
   \context Voice = "main" {
@@ -118,9 +118,9 @@ top =  \relative c' {
   <f f,>2 \moveFingering #'(-0.3 . -1.5) <es es,>4-4 |		%29
   <as as,>-.-) r <ges ges,> ~ |
   <ges ges,>-( <f f,>-) <es es,>-4-. |
-  \override TextScript   #'padding = #3
+  \override TextScript.padding = #3
   <as as,>-. r_\markup {\italic "cresc."} <ges ges,> ~ |
-  \revert TextScript #'padding
+  \revert TextScript.padding
   <ges ges,>-( <f f,>-) <bes bes,>-\sf ~ |	%33
   <bes bes,>-( \moveFingering #'(0 . 0.5) <as as,>-4-) r |
   << { c,,2-3-( es8-5 des-3-) } \\ { ges,!2.-\p } >> |
@@ -161,7 +161,7 @@ top =  \relative c' {
 }
 
 bottom =  \relative c {
- \override TextScript   #'padding = #2
+ \override TextScript.padding = #2
  \key des \major
  \time 3/4
  \clef bass
@@ -276,9 +276,9 @@ bottom =  \relative c {
    bes_2 |		%57 (2)
    as_3 ~ |
    \allNeutral
-   \override TextScript   #'padding = #3
+   \override TextScript.padding = #3
    \moveMarkup #'(4 . 0) <as as,>2^2 as4^1-.-\markup {\italic "Allegretto D. C."} |
-   \revert TextScript #'padding
+   \revert TextScript.padding
    des,^3-. r s
   } >>
  }
@@ -302,14 +302,14 @@ print-first-page-number = ##t
 \score {
  
 	
-	\new PianoStaff \with { \override VerticalAlignment #'forced-distance = #14 } <<
+	\new PianoStaff \with { \override VerticalAlignment.forced-distance = #14 } <<
   \context Staff = "up" <<
   \set Staff.midiInstrument = #"acoustic grand"
-   \context Voice = "main" { \override Fingering #'avoid-slur = #'none \top }
+   \context Voice = "main" { \override Fingering.avoid-slur = #'none \top }
   >>
   \context Staff = "down" <<
    \set Staff.midiInstrument = #"acoustic grand"
-   \override Fingering #'avoid-slur = #'none \bottom
+   \override Fingering.avoid-slur = #'none \bottom
   >>
  >>
 
